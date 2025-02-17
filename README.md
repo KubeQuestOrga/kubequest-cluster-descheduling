@@ -1,4 +1,4 @@
-# Crzgames - Descheduling Cluster K3S
+# KubeQuest - Descheduling Cluster K3S
 
 ## ⚙️ Setup Environment
 1. Connect to the NODE MASTER in Cluster K3S.
