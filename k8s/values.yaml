@@ -1,0 +1,41 @@
+# Cronjob ou Deployment: Définit si le Descheduler doit être déployé en tant que CronJob ou Deployment.
+kind: Deployment
+
+# Nombre de réplicas: Définit le nombre de réplicas du Descheduler.
+replicas: 6
+
+# Haute disponibilité: Définit si le Descheduler doit être déployé en haute disponibilité.
+leaderElection:
+  enabled: true
+
+# DeschedulerPolicy: Contient les stratégies de descheduling que le Descheduler appliquera.
+deschedulerPolicy:
+  strategies:
+    # LowNodeUtilization: Déplace les pods des nœuds sous-utilisés vers des nœuds sur-utilisés pour équilibrer la charge.
+    "LowNodeUtilization":
+      params:
+        nodeResourceUtilizationThresholds:
+          # Thresholds: Définit les seuils de sous-utilisation. Si les valeurs sont en dessous de ces seuils, le nœud est considéré comme sous-utilisé.
+          thresholds:
+            cpu: 20
+            memory: 20
+            pods: 10
+          # TargetThresholds: Cibles pour l'utilisation après le rééquilibrage.
+          targetThresholds:
+            cpu: 70
+            memory: 70
+            pods: 50
+
+# Définit l'intervalle de temps entre les exécutions du Descheduler.
+deschedulingInterval: "5m"
+
+# Pod Anti-Affinity: Assure que les instances du Descheduler ne s'exécutent pas sur le même nœud, pour une meilleure résilience.
+podAntiAffinity:
+  requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchExpressions:
+          - key: "app.kubernetes.io/name"
+            operator: "In"
+            values:
+            - "descheduler"
+      topologyKey: "kubernetes.io/hostname"
