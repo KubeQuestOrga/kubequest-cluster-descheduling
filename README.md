@@ -9,7 +9,7 @@
 sudo chmod 644 /etc/rancher/k3s/k3s.yaml
 sudo helm repo add descheduler https://kubernetes-sigs.github.io/descheduler/
 sudo helm repo update
-sudo KUBECONFIG=/etc/rancher/k3s/k3s.yaml helm install descheduler descheduler/descheduler --namespace descheduler --create-namespace --version 0.30.1 --values values.yaml
+sudo KUBECONFIG=/etc/rancher/k3s/k3s.yaml helm install descheduler descheduler/descheduler --namespace descheduler --create-namespace --version 0.32.2 --values values.yaml
 ```
 
 <br /><br /><br /><br />
